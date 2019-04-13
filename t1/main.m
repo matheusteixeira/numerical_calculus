@@ -157,6 +157,7 @@ last_x_gauss_seidel = X_gs(40)
 printf("\n");
 
 % c3). Imprima o número de iterações e o número total de operações em PONTO FLUTUANTE utilizadas;
+float_operations_gauss_seidel = float_ops_gs
 
 % c4). Imprima o erro de Truncamento máximo na solução S obtida acima, em variavel 'double'
 % para isolar o efeitos dos arredondamentos.
@@ -165,7 +166,12 @@ printf("\n");
 [ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
 [ X_gs_2 float_ops_gs2 ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance^2, float_ops_gs);
 truncamento = max(abs(X_gs - X_gs_2))
+printf("\n");
 
 % d). Imprima, no final, o número de operações em PONTO FLUTUANTE
 % utilizadas em cada um dos 3 métodos e indique o melhor método utilizado.
-float_operations_trid_gauss = float_ops_gs
+printf("Entre os 3 metodos Guass Otimizada para Matrizes Triadiagonais apresentou a menor quantidade de operações:\n")
+
+float_operations_lu_crout = float_ops_lu1 + float_ops_lu2 + float_ops_lu3
+float_operations_trid_gauss = float_ops_trid
+float_operations_gauss_seidel = float_ops_gs
