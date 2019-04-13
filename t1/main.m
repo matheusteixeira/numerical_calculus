@@ -5,7 +5,6 @@
 %   para  i = n/2+1:n-1              x(i-1)+5*x(i)+x(i+1) = 2.00;
 %   para  i = n;                     x(i-1)+x(i)          = 3.00;
 
-
 % a). Armazene o sistema acima em forma de matriz completa;
 
 n = 40;
@@ -17,9 +16,9 @@ for i = 1 : n
 end
 
 for i = 1
-    A(i, i) = 1;
-    A(i, i+1) = 1;
-    B(i) = 1.5;
+  A(i, i) = 1;
+  A(i, i+1) = 1;
+  B(i) = 1.5;
 end
 
 for i = 2 : n/2
@@ -42,10 +41,14 @@ for i = n
   B(i) = 3;
 end
 
-[L U] = lu_crout(n, A, B)
+[L U] = lu_crout(n, A, B);
 
 C = solve_l(n, L, B);
 X = solve_u(n, U, C);
 
-residuo_max_lucrout = max(abs(A .* X - B))
+first_x_lu_crout = X(1)
+
+last_x_lu_crout = X(40)
+
+residuo_max_lucrout = max(abs(X*A - B))
 

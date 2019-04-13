@@ -1,8 +1,6 @@
-function [L U] = lu_crout(n, A, B)
+function [L U B] = lu_crout(n, A, B)
   L(n, n) = 0;
-  m = size(B, 1);
-
-  k = 1;
+  U(n, n) = 0;
 
   for i = 1 : n
     L(i, 1)  = A(i, 1);

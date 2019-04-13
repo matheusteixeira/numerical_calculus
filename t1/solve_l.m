@@ -1,5 +1,4 @@
 function C = solve_l(n, L, B)
-
   C(1) = B(1)/L(1,1);
 
   for i = 2 : n
