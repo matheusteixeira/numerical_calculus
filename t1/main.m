@@ -9,6 +9,8 @@ format long
 % a). Armazene o sistema acima em forma de matriz completa;
 float_ops_lu = 0;
 float_ops_trid = 0;
+float_ops_gs = 0;
+
 n = 40;
 
 for i = 1 : n
@@ -83,7 +85,7 @@ for i = n
 end
 
 % b1). Resolva o sistema acima por um método direto otimizado (Gauss-Otimizado para matriz tridiagonal);
-[ X_trid  float_ops_trid] = trid_gauss(n, r, t, d, B, float_ops_trid);
+[X_trid  float_ops_trid] = trid_gauss(n, r, t, d, B, float_ops_trid);
 
 % b2). Imprima somente a 1º e última incógnitas e o resíduo máximo;
 first_x_trid_gauss = X_trid(1)
@@ -96,16 +98,63 @@ printf("\n");
 
 % c). Resolva o sistema acima por um método iterativo (Gauss-Seidel),
 % utilizando o armazenamento otimizado em 4 vetores item b):
+printf("Gauss-Seidel\n")
+
+xi(1 : n) = 0;
+relax = 1
+tolerance = 1e-2;
+
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+first_x_gauss_seidel = X_gs(1)
+last_x_gauss_seidel = X_gs(40)
+
+printf("\n");
 
 % c1). Teste fatores de relaxação f (sub ou sobre, entre 0<f<2) e determine previamente
 % (com critério de parada grosseiro, 1e-2) o seu valor otimizado, que permita a convergência
 %com o menor número de iterações. Imprima o numero de iterações de cada teste
-% (pode-se usar critério de parada maior, 1e-2, para  efetuar menos iterações nesta fase de testes);
+
+printf("Gauss-Seidel com sobre-relaxação (2) \n")
+relax = 2
+tolerance = 1e-2;
+
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+first_x_gauss_seidel = X_gs(1)
+last_x_gauss_seidel = X_gs(40)
+printf("\n");
+
+
+printf("Gauss-Seidel com sub-relaxação (0.5) \n")
+relax = 0.5
+tolerance = 1e-2;
+
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+first_x_gauss_seidel = X_gs(1)
+last_x_gauss_seidel = X_gs(40)
+printf("\n");
+
+printf("Gauss-Seidel com sub-relaxação (0.75) \n")
+relax = 0.75
+tolerance = 1e-2;
+
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+first_x_gauss_seidel = X_gs(1)
+last_x_gauss_seidel = X_gs(40)
+printf("\n");
 
 % c2). Determine a solução S={xi} do sistema acima, pelo método iterativo de Gauss-Seidel,
 % com critério de parada Max|Dxi|<=1.10-4 (Dx = diferenças entre variáveis novas e antigas),
 % e uso o valor otimizado do fator de relaxação obtido acima.
-% Imprima somente a 1º e última incógnitas e o resíduo máximo. Use um algoritmo otimizado, que não realize cálculos com lugares vazios na matriz, senão o método de Gauss-Seidel não vale a pena;
+% Imprima somente a 1º e última incógnitas e o resíduo máximo.
+printf("Gauss-Seidel com critério de parada Max|Dxi|<=1.10-4 e relaxação 0.75 \n")
+
+relax = 0.75
+tolerance = 1*10^-4;
+
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+first_x_gauss_seidel = X_gs(1)
+last_x_gauss_seidel = X_gs(40)
+printf("\n");
 
 % c3). Imprima o número de iterações e o número total de operações em PONTO FLUTUANTE utilizadas;
 
@@ -113,8 +162,10 @@ printf("\n");
 % para isolar o efeitos dos arredondamentos.
 % Lembre-se que o erro de Truncamento máximo pode ser obtido com
 % Max|xi(aproximado,double,criterio)-xi(aproximado,double,criterio2)|.
-
+[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+[ X_gs_2 float_ops_gs2 ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance^2, float_ops_gs);
+truncamento = max(abs(X_gs - X_gs_2))
 
 % d). Imprima, no final, o número de operações em PONTO FLUTUANTE
 % utilizadas em cada um dos 3 métodos e indique o melhor método utilizado.
-
+float_operations_trid_gauss = float_ops_gs
