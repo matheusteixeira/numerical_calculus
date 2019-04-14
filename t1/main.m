@@ -10,6 +10,7 @@ format long
 float_ops_lu = 0;
 float_ops_trid = 0;
 float_ops_gs = 0;
+float_ops_gs_trid = 0;
 
 n = 40;
 
@@ -149,9 +150,9 @@ printf("\n");
 printf("Gauss-Seidel com critério de parada Max|Dxi|<=1.10-4 e relaxação 0.75 \n")
 
 relax = 0.75
-tolerance = 1*10^-4;
+tolerance = 1e-4;
 
-[ X_gs float_ops_gs ] = gauss_seidel(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
+[ X_gs float_ops_gs_trid ] = gauss_seidel_trid(n, t, r, d, B, xi, relax, tolerance, float_ops_gs);
 first_x_gauss_seidel = X_gs(1)
 last_x_gauss_seidel = X_gs(40)
 printf("\n");
@@ -175,3 +176,4 @@ printf("Entre os 3 metodos Guass Otimizada para Matrizes Triadiagonais apresento
 float_operations_lu_crout = float_ops_lu1 + float_ops_lu2 + float_ops_lu3
 float_operations_trid_gauss = float_ops_trid
 float_operations_gauss_seidel = float_ops_gs
+float_ops_gs_trid = float_ops_gs_trid
