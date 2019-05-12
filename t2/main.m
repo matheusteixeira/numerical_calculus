@@ -22,6 +22,8 @@ xi = locate_polynomial_roots(a, n, 0.1);
 % 2a). Use o método de Newton tradicional (com multiplicidade M=1);
 traditional_newton_roots = traditional_newton(xi, a, n, tolerance)
 
+residuo = abs(solve_horner(a, traditional_newton_roots))
+
 % 2b). Use o método de Newton, usando a estimativa da multiplicidade M de
 % cada raiz (teste diferentes valores de raízes iniciais e diferentes limites (1e-2, 1e-3,...)
 % para a soma dos restos na estimativa da multiplicidade).

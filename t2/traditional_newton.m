@@ -16,12 +16,10 @@ function x = traditional_newton(xi, a, n, tolerance)
 
       iter += 1;
     until (abs(dx) >= tolerance && iter < 1000)
-  end
 
     new_root = x_intial;
 
     x = [x new_root];
-
     [a _] = briot_ruffini(a, x(end));
-
+  end
 end
